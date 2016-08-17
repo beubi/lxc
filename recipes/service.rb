@@ -1,6 +1,10 @@
 # use upstart on ubuntu > saucy
 service_provider = Chef::Provider::Service::Upstart if 'ubuntu' == node['platform'] &&
   Chef::VersionConstraint.new('>= 13.10').include?(node['platform_version'])
+  
+if 'ubuntu' == node['platform'] && Chef::VersionConstraint.new('>= 15.04').include?(node['platform_version'])
+  service_provider = Chef::Provider::Service::Systemd
+end
 
 # this just reloads the dnsmasq rules when the template is adjusted
 service 'lxc-net' do
