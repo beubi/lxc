@@ -15,7 +15,7 @@ include_recipe 'lxc::package'
 
 # Start at 0 and increment up if found
 unless(node[:network][:interfaces][:lxcbr0])
-  max = node.network.interfaces.map do |int, info|
+  max = node[:network][:interfaces].map do |int, info|
     info[:routes]
   end.flatten.compact.map do |routes|
     if(routes[:family].to_s == 'inet')
@@ -58,7 +58,7 @@ file '/etc/default/lxc' do
   mode 0644
 end
 
-if(node.platform_family?(:rhel))
+if(node['platform_family'] == 'rhel')
   include_recipe 'lxc::rhel_bridge'
 end
 
@@ -77,7 +77,7 @@ file '/etc/apparmor.d/lxc/lxc-with-nesting' do
   mode 0644
   action node[:lxc][:apparmor][:enable_nested_containers] ? :create : :delete
   notifies :restart, 'service[lxc-apparmor]', :immediately
-  only_if{ node.platform == 'ubuntu' }
+  only_if{ node['platform'] == 'ubuntu' }
 end
 
 require 'elecksee/lxc'

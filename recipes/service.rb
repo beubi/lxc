@@ -11,7 +11,7 @@ service 'lxc-net' do
   provider service_provider
   action [:enable, :start]
   subscribes :restart, 'file[/etc/default/lxc]'
-  only_if{ node.platform_family?('debian') }
+  only_if{ node['platform_family'] == 'debian' }
 end
 
 service 'lxc' do

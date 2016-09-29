@@ -34,7 +34,7 @@ default[:lxc][:knife][:static_ips] = []
 
 default[:lxc][:user_locks] = %w(ubuntu)
 
-default[:lxc][:packages] = node.platform_family?('rhel') ? ['lxc', 'lxc-templates', 'lxc-libs', 'bridge-utils', 'libcgroup'] : ['lxc']
+default[:lxc][:packages] = node['platform_family'] == 'rhel' ? ['lxc', 'lxc-templates', 'lxc-libs', 'bridge-utils', 'libcgroup'] : ['lxc']
 default[:lxc][:mirror] = 'http://archive.ubuntu.com/ubuntu'
 default[:lxc][:containers] = {}
 
