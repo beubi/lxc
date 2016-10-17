@@ -68,7 +68,7 @@ chef_gem 'elecksee' do
   if(node[:lxc][:elecksee][:version_restriction])
     version node[:lxc][:elecksee][:version_restriction]
   end
-  compile_time false
+  compile_time true
   action node[:lxc][:elecksee][:action]
 end
 
